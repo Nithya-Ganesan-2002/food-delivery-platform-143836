@@ -3,6 +3,7 @@ const express = require('express');
 const routes = require('./routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../swagger');
+const { requestLogger } = require('./middleware');
 
 // Initialize express app
 const app = express();
@@ -40,6 +41,9 @@ app.use('/docs', swaggerUi.serve, (req, res, next) => {
 
 // Parse JSON request body
 app.use(express.json());
+
+// Add request logging
+app.use(requestLogger);
 
 // Mount routes
 app.use('/', routes);
